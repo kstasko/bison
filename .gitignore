@@ -1,6 +1,7 @@
 #      OS        #
 ##################
 *.env
+node_modules
 
 # Python Runtime #
 ##################
