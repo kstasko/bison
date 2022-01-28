@@ -1,4 +1,4 @@
-# bot.py
+# dyson.py
 import os
 
 import discord
@@ -8,7 +8,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 
-class Bison(discord.Client):
+class Dyson(discord.Client):
     async def on_ready(self):
         print('Logged on as {0}!'.format(self.user))
 
@@ -16,5 +16,5 @@ class Bison(discord.Client):
         if message.content.startswith('bing'):
             await message.channel.send('bong!')
 
-client = Bison()
+client = Dyson()
 client.run(TOKEN)
