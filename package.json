@@ -2,7 +2,7 @@
   "name": "dyson",
   "version": "1.0.0",
   "description": "discord bot",
-  "main": "index.js",
+  "main": "bin/dyson.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kstasko/bison#readme",
   "dependencies": {
+    "aws-cdk": "^2.9.0",
     "aws-cdk-lib": "^2.9.0"
   }
 }
