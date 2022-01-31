@@ -19,5 +19,8 @@
   "dependencies": {
     "aws-cdk": "^2.9.0",
     "aws-cdk-lib": "^2.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0"
   }
 }
