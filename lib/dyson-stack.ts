@@ -1,14 +1,12 @@
 import { Construct } from 'constructs';
 import {Stack, StackProps } from 'aws-cdk-lib';
-import { AmazonLinuxGeneration, AmazonLinuxImage, AmazonLinuxCpuType, Instance, InstanceClass, InstanceSize, InstanceType, MachineImage, UserData, Vpc }  from 'aws-cdk-lib/aws-ec2';
+import { AmazonLinuxGeneration, AmazonLinuxImage, AmazonLinuxCpuType, Instance, InstanceClass, InstanceSize, InstanceType, MachineImage, Peer, Port, SubnetType, SecurityGroup, UserData, Vpc }  from 'aws-cdk-lib/aws-ec2';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 import { Asset } from 'aws-cdk-lib/aws-s3-assets'
 
 
-interface DysonProps extends StackProps {
-  encryptBucket?: boolean;
-}
+interface DysonProps extends StackProps {}
 
 export class DysonStack extends Stack {
   constructor(scope: Construct, id: string, props?: DysonProps) {
@@ -25,7 +23,27 @@ export class DysonStack extends Stack {
 
     // EC2 Instance /////////////////
     ////////////////////////////////
-    const vpc = new Vpc(this, 'dyson-vpc');
+    const vpc = new Vpc(this, 'dyson-vpc', {
+      cidr: '10.0.0.0/16',
+      natGateways: 0,
+      subnetConfiguration: [
+        {name: 'public', cidrMask: 24, subnetType: SubnetType.PUBLIC}
+      ],
+    });
+
+    const securityGroup = new SecurityGroup(this, 'SecurityGroup', {
+      vpc,
+      description: 'Allow ssh access to ec2 instances',
+      allowAllOutbound: true,
+      disableInlineRules: true
+    });
+
+    //This adds the rule as an external cloud formation construct
+    securityGroup.addIngressRule(
+      Peer.anyIpv4(),
+      Port.tcp(22), 
+      'allow ssh access from the world'
+      );
 
     const ami = new AmazonLinuxImage({
       generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
@@ -35,11 +53,13 @@ export class DysonStack extends Stack {
     const instance = new Instance(this, 'dyson-ec2-instance', {
       instanceType: InstanceType.of(InstanceClass.T4G, InstanceSize.MICRO),
       machineImage: ami,
-      vpc: vpc
+      vpc: vpc,
+      securityGroup: securityGroup
     });
 
     // EC2 INSTANCE CONFIGURATION ///
     ////////////////////////////////
+
     bucket.grantRead(instance.role)
 
     const dysonAsset = new Asset(this, 'dyson-appcode-asset', {
