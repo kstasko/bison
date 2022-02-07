@@ -1,5 +1,4 @@
 FROM python:3.8-slim-buster
-
 RUN mkdir -p /dyson
 RUN chmod -R +rwx /dyson
 USER root
