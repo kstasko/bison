@@ -15,6 +15,8 @@ class Dyson(discord.Client):
     async def on_message(self, message):
         if message.content.startswith('bing'):
             await message.channel.send('bong!')
+        if message.content.startswith('tight'):
+            await message.channel.send('Tight!')
 
 client = Dyson()
 client.run(TOKEN)

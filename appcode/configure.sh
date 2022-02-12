@@ -1,8 +1,19 @@
 sudo yum update -y
-amazon-linux-extras install docker
-sudo service docker start
-sudo systemctl enable docker
-sudo usermod -a -G docker ec2-user
-chkconfig docker on
-docker build .
+
+# Retrieve new messages from S3 and save to tmpemails/ directory:
+sudo mkdir /home/dyson
+
+aws s3 cp \
+   s3://dysonstack-dysonbucket8c5c77ef-1pijkead3929b \
+   . \
+    --recursive \
+
+# Install & start Docker
+sudo yum -y install docker
+
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+
+# Start Dyson
+sudo docker build .
 
