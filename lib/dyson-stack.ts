@@ -13,8 +13,6 @@ export class DysonStack extends Stack {
   constructor (scope: Construct, id: string, props?: DysonProps) {
     super(scope, id, props)
 
-    // STORAGE //////////////////////
-    /// /////////////////////////////
     const bucket = new Bucket(this, 'dyson-bucket')
 
     new BucketDeployment(this, 'dyson-deploy', {
@@ -22,8 +20,6 @@ export class DysonStack extends Stack {
       destinationBucket: bucket
     })
 
-    // EC2 Instance /////////////////
-    /// /////////////////////////////
     const vpc = new Vpc(this, 'dyson-vpc', {
       cidr: '10.0.0.0/16',
       subnetConfiguration: [
@@ -78,18 +74,10 @@ export class DysonStack extends Stack {
       securityGroup: securityGroup
     })
 
-    // EC2 INSTANCE CONFIGURATION ///
-    /// /////////////////////////////
-
     bucket.grantRead(instance.role)
 
     const dysonAsset = new Asset(this, 'dyson-appcode-asset', {
       path: './appcode/'
-    })
-
-    instance.userData.addS3DownloadCommand({
-      bucket: bucket,
-      bucketKey: dysonAsset.s3ObjectKey
     })
 
     instance.userData.addExecuteFileCommand({
