@@ -1,4 +1,4 @@
-Name: Main Branch Deployment
+name: Main Branch Deployment
 on:
   [ workflow_dispatch ]
 permissions:
