@@ -13,11 +13,9 @@ class Dyson(discord.Client):
         print('Logged on as {0}!'.format(self.user))
 
     async def on_message(self, message):
-        if message.content.startswith('bing'):
-            await message.channel.send('bong!')
-
-        if message.content.startswith('tight'):
-            await message.channel.send('Tight!')
+        if message.content.startswith("tight"):
+            await message.channel.send("...tight.")
+                
 
 client = Dyson()
 client.run(TOKEN)
