@@ -16,7 +16,7 @@ jobs:
     - name: assume deploy role
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        role-to-assume: arn:aws:iam::467222377375:role/Cognito_githubactions_Auth_Role
+        role-to-assume: arn:aws:iam::467222377375:role/github-actions
         aws-region: us-east-1
     
     - name: cdk deploy
