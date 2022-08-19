@@ -20,4 +20,5 @@ jobs:
         aws-region: us-east-1
     
     - name: cdk deploy
-      uses: .github/actions/cdk-deploy
+      uses: ./.github/actions/cdk-deploy 
+        environment: nonprd
