@@ -3,5 +3,5 @@ description: deploy to a given aws account
 runs:
   using: "composite"
   steps:
-    run: echo Hello
-    shell: bash
+    - run: echo Hello
+      shell: bash
