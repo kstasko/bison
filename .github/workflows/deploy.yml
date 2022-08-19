@@ -1,6 +1,6 @@
 name: main branch deployment
 on:
-  [ push, pull_request, workflow_dispatch ]
+  [ push, workflow_dispatch ]
 permissions:
   id-token: write
   contents: read
@@ -20,4 +20,4 @@ jobs:
         aws-region: us-east-1
     
     - name: cdk deploy
-      uses: ./.github/actions/cdk-deploy
+      uses: .github/actions/cdk-deploy

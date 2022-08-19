@@ -1,7 +1,17 @@
 import { Construct } from 'constructs'
 import { Stack, StackProps } from 'aws-cdk-lib'
-import { KeyPair } from 'cdk-ec2-key-pair'
-import { AmazonLinuxGeneration, AmazonLinuxImage, AmazonLinuxCpuType, Instance, InstanceClass, InstanceSize, InstanceType, Peer, Port, SubnetType, SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2'
+import { AmazonLinuxGeneration, 
+         AmazonLinuxImage,
+         AmazonLinuxCpuType,
+         Instance,
+         InstanceClass,
+         InstanceSize,
+         InstanceType,
+         Peer,
+         Port,
+         SubnetType,
+         SecurityGroup,
+         Vpc } from 'aws-cdk-lib/aws-ec2'
 import { Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
