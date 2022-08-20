@@ -8,3 +8,5 @@ runs:
         node-version: 17.4.0
     - run: npm install
       shell: bash
+    - run: cdk list
+      shell: bash
