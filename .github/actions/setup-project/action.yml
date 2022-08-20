@@ -1,0 +1,9 @@
+name: setup-project
+description: installs node and project dependencies
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 17.4.0
+    - run: npm install
