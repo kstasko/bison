@@ -1,0 +1,21 @@
+name: pr creation
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy:
+    name: deploy to aws
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    
+    - name: setup project
+      uses: ./.github/actions/setup-project
+
+    - name: jest tests
+      uses: ./.github/actions/jest-tests
