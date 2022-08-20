@@ -10,3 +10,5 @@ runs:
       shell: bash
     - run: npm i -g aws-cdk
       shell: bash
+    - run: npm i -g jest
+      shell: bash
