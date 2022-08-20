@@ -6,8 +6,8 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  deploy:
-    name: deploy to aws
+  jest-tests:
+    name: run jest tests
     runs-on: ubuntu-latest
 
     steps:

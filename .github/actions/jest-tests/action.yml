@@ -4,5 +4,4 @@ runs:
   using: "composite"
   steps:
     - run: jest
-      id: jest tests
       shell: bash
