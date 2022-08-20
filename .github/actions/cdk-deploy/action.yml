@@ -1,0 +1,7 @@
+name: cdk-deploy
+description: deploy to a given aws account
+runs:
+  using: "composite"
+  steps:
+    - run: cdk deploy --all --require-approval never
+      shell: bash
