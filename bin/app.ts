@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
+import { BysonStack } from '../lib/byson-stack';
 
 const app = new cdk.App();
 
-new BysonStack(app, 'BysonStack', {
-  
-});
+new BysonStack(app, 'BysonStack', {});
