@@ -24,7 +24,7 @@ export class BysonStack extends Stack {
     super(scope, id, props)
 
     const s3bucket = new Bucket(this, 'BysonBucket', {
-      bucketName: `BysonBucket-${this.account}-${this.region}`
+      bucketName: `byson-${this.account}-${this.region}`
     })
     
     new BucketDeployment(this, 'BysonBucketDeployment', {
