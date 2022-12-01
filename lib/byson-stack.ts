@@ -13,7 +13,7 @@ import { AmazonLinuxGeneration,
   SecurityGroup,
   Vpc } from 'aws-cdk-lib/aws-ec2'
 import { Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam'
-import { Asset } from 'aws-cdk-lib/aws-s3-assets'
+// import { Asset } from 'aws-cdk-lib/aws-s3-assets'
 import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment'
 interface BysonProps extends StackProps {}
@@ -23,14 +23,16 @@ export class BysonStack extends Stack {
   constructor (scope: Construct, id: string, props?: BysonProps) {
     super(scope, id, props)
 
-    const bucket = new Bucket(this, 'BysonBucket')
+    const s3bucket = new Bucket(this, 'BysonBucket', {
+      bucketName: `BysonBucket-${this.account}-${this.region}`
+    })
     
     new BucketDeployment(this, 'BysonBucketDeployment', {
       sources: [Source.asset('./appcode')],
-      destinationBucket: bucket
+      destinationBucket: s3bucket
     })
 
-    const vpc = new Vpc(this, 'BysonVpcc', {
+    const vpc = new Vpc(this, 'BysonVpc', {
       cidr: '10.0.0.0/16',
       subnetConfiguration: [
         {
@@ -41,12 +43,12 @@ export class BysonStack extends Stack {
       ]
     })
 
-        const ec2Role = new Role(this, 'BysonEc2Role', {
+    const ec2Role = new Role(this, 'BysonEc2Role', {
       assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
       description: 'Byson Ec2 Role',
     });
 
-    const securityGroup = new SecurityGroup(this, 'BysonEc2SecurityGroup', {
+    const securityGroup = new SecurityGroup(this, 'BysonSecurityGroup', {
       vpc,
       description: 'allow ssh access to ec2 instances',
       allowAllOutbound: true
@@ -74,11 +76,11 @@ export class BysonStack extends Stack {
       securityGroup: securityGroup
     })
 
-    bucket.grantRead(instance.role)
+    s3bucket.grantRead(instance.role)
 
-    const bysonAsset = new Asset(this, 'BysonAssetAppcode', {
-      path: './appcode/'
-    })
+    // const bysonAsset = new Asset(this, 'BysonAssetAppcode', {
+    //   path: './appcode/'
+    // })
 
     // instance.userData.addExecuteFileCommand({
     //   filePath: './appcode/configure.sh'
